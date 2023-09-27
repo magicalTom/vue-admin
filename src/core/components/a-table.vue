@@ -21,19 +21,19 @@
 
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
+import { TableProps } from 'element-plus';
 import { reactive, useSlots } from 'vue';
-import { getFieldConfigByInstance } from '../decorator/decorators/field';
-import { getTableConfigByInstance } from '../decorator/decorators/table';
-import ClassConstructor from '../decorator/interface/ClassConstructor';
+import TableColumnConfig from '../constants/TableColumnConfig.default';
+import { getFieldLabel } from '../decorators/field';
+import { getTableColumnConfig } from '../decorators/tableColumn';
+import ClassConstructor from '../interface/ClassConstructor';
 
-const props = withDefaults(
-  defineProps<{
-    data: any[];
-    keys?: string[];
-    entity: ClassConstructor;
-  }>(),
-  {},
-);
+type Props = {
+  keys?: string[];
+  entity: ClassConstructor;
+} & TableProps<any>;
+
+const props = withDefaults(defineProps<Props>(), {});
 
 const slots = useSlots();
 const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[] }>({
@@ -45,9 +45,14 @@ const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[
   const entity = new props.entity();
   const keys = props.keys ? props.keys : Object.keys(entity);
   state.tableColumns = keys.map((key) => {
-    const fieldConfig = getFieldConfigByInstance(entity, key);
-    const tableConfig = getTableConfigByInstance(entity, key);
-    return { id: Math.random().toString(16), label: fieldConfig?.label, ...(tableConfig || {}), prop: key };
+    const config = getTableColumnConfig(entity, key);
+    return {
+      id: Math.random().toString(16),
+      ...TableColumnConfig,
+      label: getFieldLabel(entity, key),
+      ...(config || {}),
+      prop: key,
+    };
   });
 }
 

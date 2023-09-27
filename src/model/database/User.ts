@@ -1,14 +1,12 @@
-import field from '@/core/decorator/decorators/field';
-import form from '@/core/decorator/decorators/form';
+import field from '@/core/decorators/field';
+import form from '@/core/decorators/form';
 
 export default class User {
   /**
    * # 用户名
    */
   @form({
-    itemElement: {
-      rules: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-    },
+    formItem: {},
   })
   @field({
     label: '用户名',

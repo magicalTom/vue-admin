@@ -1,4 +1,3 @@
-import '@/core/config/window';
 import '@/router/permissions';
 import '@/theme/reset.scss';
 import ElementPlus from 'element-plus';
