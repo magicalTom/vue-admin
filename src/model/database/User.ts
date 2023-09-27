@@ -1,5 +1,6 @@
 import field from '@/core/decorators/field';
 import form from '@/core/decorators/form';
+import tableColumn from '@/core/decorators/tableColumn';
 
 export default class User {
   /**
@@ -19,5 +20,6 @@ export default class User {
   @field({
     label: '密码',
   })
+  @tableColumn({ sortable: true })
   password!: string;
 }
