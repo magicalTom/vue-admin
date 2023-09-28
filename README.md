@@ -34,7 +34,7 @@ npm run dev
 ```typescript
 class User {
   @form({
-    item: {
+    formItem: {
       rules: [{ required: true, message: '请输入账号', trigger: 'change' }],
     },
   })

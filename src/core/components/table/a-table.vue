@@ -20,13 +20,7 @@
     <el-table-column type="expand" v-if="showExpand"></el-table-column>
     <el-table-column type="selection" v-if="showSelection"></el-table-column>
     <el-table-column label="序号" type="index" width="80" v-if="showIndex"></el-table-column>
-    <el-table-column
-      v-for="item in state.tableColumns"
-      :key="item.id"
-      v-bind="item"
-      show-overflow-tooltip
-      align="center"
-    >
+    <el-table-column v-for="item in state.tableColumns" :key="item.id" v-bind="item">
       <template #default="scope" v-if="isHasSlotByProp(item.prop)">
         <slot :name="item.prop" v-bind="scope" />
       </template>
@@ -49,7 +43,9 @@ import { getFieldLabel } from '@/core/decorators/field';
 import { getTableColumnConfig } from '@/core/decorators/tableColumn';
 import ClassConstructor from '@/core/interface/ClassConstructor';
 import { TableProps } from 'element-plus';
+import { isUndefined } from 'element-plus/es/utils/types.mjs';
 import { reactive, ref, useSlots } from 'vue';
+import { TableConfigDefault } from './table';
 
 type Props = {
   keys?: string[];
@@ -92,8 +88,8 @@ const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[
   slotsKeys: Object.keys(slots),
 });
 const tableProps = ref(
-  Object.entries({ ...TableColumnConfig, ...props }).reduce((pre, [key, value]) => {
-    if (!value) return pre;
+  Object.entries({ ...TableConfigDefault, ...props }).reduce((pre, [key, value]) => {
+    if (isUndefined(value)) return pre;
     return { ...pre, [key]: value };
   }, {}),
 );

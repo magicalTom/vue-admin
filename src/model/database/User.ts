@@ -7,7 +7,9 @@ export default class User {
    * # 用户名
    */
   @form({
-    formItem: {},
+    formItem: {
+      rules: [{ required: true, message: 'error message', trigger: 'change' }],
+    },
   })
   @field({
     label: '用户名',
