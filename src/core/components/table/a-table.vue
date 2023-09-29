@@ -1,6 +1,6 @@
 <template>
   <el-table
-    v-bind="tableProps"
+    v-bind="props"
     @select="handleEvent('select')"
     @select-all="handleEvent('select-all')"
     @selection-change="handleEvent('selection-change')"
@@ -43,9 +43,7 @@ import { getFieldLabel } from '@/core/decorators/field';
 import { getTableColumnConfig } from '@/core/decorators/tableColumn';
 import ClassConstructor from '@/core/interface/ClassConstructor';
 import { TableProps } from 'element-plus';
-import { isUndefined } from 'element-plus/es/utils/types.mjs';
-import { reactive, ref, useSlots } from 'vue';
-import { TableConfigDefault } from './table';
+import { reactive, useSlots } from 'vue';
 
 type Props = {
   keys?: string[];
@@ -81,28 +79,25 @@ type Emits = {
 const emits = defineEmits<Emits>();
 const props = withDefaults(defineProps<Props>(), {
   emptyText: '暂无数据',
+  fit: true,
+  showHeader: true,
+  selectOnIndeterminate: true,
 });
 const slots = useSlots();
 const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[] }>({
   tableColumns: [],
   slotsKeys: Object.keys(slots),
 });
-const tableProps = ref(
-  Object.entries({ ...TableConfigDefault, ...props }).reduce((pre, [key, value]) => {
-    if (isUndefined(value)) return pre;
-    return { ...pre, [key]: value };
-  }, {}),
-);
 
 {
-  const entity = new props.entity();
-  const keys = props.keys ? props.keys : Object.keys(entity);
+  const instance = new props.entity();
+  const keys = props.keys ? props.keys : Object.keys(instance);
   state.tableColumns = keys.map((key) => {
-    const config = getTableColumnConfig(entity, key);
+    const config = getTableColumnConfig(instance, key);
     return {
       id: crypto.randomUUID(),
       ...TableColumnConfig,
-      label: getFieldLabel(entity, key),
+      label: getFieldLabel(instance, key),
       ...(config || {}),
       prop: key,
     };

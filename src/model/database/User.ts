@@ -8,7 +8,7 @@ export default class User {
    */
   @form({
     formItem: {
-      rules: [{ required: true, message: 'error message', trigger: 'change' }],
+      rules: [{ required: true, message: 'error message', trigger: 'blur' }],
     },
   })
   @field({
