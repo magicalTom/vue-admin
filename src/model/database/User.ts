@@ -10,6 +10,10 @@ export default class User {
     formItem: {
       rules: [{ required: true, message: 'error message', trigger: 'blur' }],
     },
+    el: {
+      type: 'input',
+      props: { placeholder: '请输入用户名' },
+    },
   })
   @field({
     label: '用户名',

@@ -11,6 +11,9 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "vue"],
+  "globals": {
+    "defineModel": "readonly"
+  },
   "rules": {
     "vue/multi-word-component-names": "off"
   }
