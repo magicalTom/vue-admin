@@ -1,4 +1,4 @@
-import { FormItemProps, InputProps, SelectContext } from 'element-plus';
+import { FormItemProps, InputProps } from 'element-plus';
 
 export interface IFormItem extends Partial<Omit<FormItemProps, 'label' | 'prop'>> {}
 
@@ -9,7 +9,21 @@ export interface InputEl {
 
 export interface SelectEl {
   type: 'select';
-  props: SelectContext;
+  props?: {
+    multiple?: boolean;
+    disabled?: boolean;
+    valueKey?: string;
+    size?: '' | 'large' | 'default' | 'small';
+    clearable?: boolean;
+    collapseTags?: boolean;
+    collapseTagsTooltip?: boolean;
+    multipleLimit?: boolean;
+    name?: string;
+    effect?: 'dark' | 'light';
+    autocomplete?: string;
+    placeholder?: string;
+    filterable?: boolean;
+  };
 }
 
 export default interface IForm {

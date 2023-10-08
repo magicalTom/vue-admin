@@ -1,5 +1,6 @@
 <template>
   <el-table
+    ref="elRef"
     v-bind="props"
     @select="handleEvent('select')"
     @select-all="handleEvent('select-all')"
@@ -21,12 +22,12 @@
     <el-table-column type="selection" v-if="showSelection"></el-table-column>
     <el-table-column label="序号" type="index" width="80" v-if="showIndex"></el-table-column>
     <el-table-column v-for="item in state.tableColumns" :key="item.id" v-bind="item">
-      <template #default="scope" v-if="isHasSlotByProp(item.prop)">
+      <template #default="scope" v-if="isHasSlotOf(item.prop)">
         <slot :name="item.prop" v-bind="scope" />
       </template>
     </el-table-column>
     <slot name="right" />
-    <template #append v-if="isHasSlotByProp('append')">
+    <template #append v-if="isHasSlotOf('append')">
       <slot name="append" />
     </template>
 
@@ -43,7 +44,7 @@ import { getFieldLabel } from '@/core/decorators/field';
 import { getTableColumnConfig } from '@/core/decorators/tableColumn';
 import ClassConstructor from '@/core/interface/ClassConstructor';
 import { TableProps } from 'element-plus';
-import { reactive, useSlots } from 'vue';
+import { computed, reactive, ref, useSlots } from 'vue';
 
 type Props = {
   keys?: string[];
@@ -83,11 +84,14 @@ const props = withDefaults(defineProps<Props>(), {
   showHeader: true,
   selectOnIndeterminate: true,
 });
+const elRef = ref();
 const slots = useSlots();
 const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[] }>({
   tableColumns: [],
   slotsKeys: Object.keys(slots),
 });
+
+const _ref = computed(() => elRef.value);
 
 {
   const instance = new props.entity();
@@ -104,12 +108,16 @@ const state = reactive<{ tableColumns: Record<string, any>[]; slotsKeys: string[
   });
 }
 
-const isHasSlotByProp = (prop: string) => state.slotsKeys.includes(prop);
+const isHasSlotOf = (prop: string) => state.slotsKeys.includes(prop);
 const handleEvent =
   (event: EmitsEvent) =>
   (...args: any[]) => {
     emits(event, ...args);
   };
+
+defineExpose({
+  ref: _ref,
+});
 </script>
 
 <style lang="scss" scoped></style>

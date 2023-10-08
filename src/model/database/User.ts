@@ -8,7 +8,7 @@ export default class User {
    */
   @form({
     formItem: {
-      rules: [{ required: true, message: 'error message', trigger: 'blur' }],
+      rules: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
     },
     el: {
       type: 'input',
@@ -23,6 +23,11 @@ export default class User {
   /**
    * # 密码
    */
+  @form({
+    el: {
+      type: 'select',
+    },
+  })
   @field({
     label: '密码',
   })

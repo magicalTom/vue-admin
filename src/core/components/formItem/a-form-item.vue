@@ -1,10 +1,10 @@
 <template>
   <el-form-item v-bind="state.props" :label="state.label" :prop="state.prop">
-    <template #label="{ label }" v-if="isHasSlotByProp('label')">
+    <template #label="{ label }" v-if="isHasSlotOf('label')">
       <slot name="label" :label="label" />
     </template>
     <slot />
-    <template #error="{ error }" v-if="isHasSlotByProp('error')">
+    <template #error="{ error }" v-if="isHasSlotOf('error')">
       <slot name="error" :error="error" />
     </template>
   </el-form-item>
@@ -53,5 +53,5 @@ const formContext = inject(formContextKey, undefined);
   };
 }
 
-const isHasSlotByProp = (key: string) => state.slotKeys.includes(key);
+const isHasSlotOf = (key: string) => state.slotKeys.includes(key);
 </script>
