@@ -1,34 +1,20 @@
 <template>
   <div>
-    <ATable :data="[]" :entity="User" />
-    <el-form :model="form" :rules="rules" inline>
-      <AFormItem :entity="User" field="username">
-        <AField v-model="form.username" :entity="User" field="username" ref="inputRef" />
-      </AFormItem>
-      <AFormItem :entity="User" field="password">
-        <AField v-model="form.password" :entity="User" field="password" />
-      </AFormItem>
-    </el-form>
+    <AInput v-model="username" :entity="User" field="username">
+      <template #prefix>
+        <span>https://</span>
+      </template>
+    </AInput>
 
-    <el-button @click="handleClear">Clear</el-button>
+    <ASelect v-model="username" :entity="User" field="password" :options="[{ label: 'hh', value: 'value' }]" />
   </div>
 </template>
 
 <script setup lang="ts">
-import AField from '@/core/components/formEl/a-field.vue';
-import AFormItem from '@/core/components/formItem/a-form-item.vue';
-import ATable from '@/core/components/table/a-table.vue';
-import { buildFormRules } from '@/core/helper/form';
+import AInput from '@/core/components/input/a-input.vue';
+import ASelect from '@/core/components/select/a-select.vue';
 import User from '@/model/database/User';
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 
-const instance = new User();
-const form = reactive(instance);
-const rules = buildFormRules(instance);
-
-const inputRef = ref();
-
-const handleClear = () => {
-  inputRef.value.ref.clear();
-};
+const username = ref();
 </script>

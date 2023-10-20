@@ -1,32 +1,16 @@
-import { FormItemProps, InputProps } from 'element-plus';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FormItemProps } from 'element-plus';
 
 export interface IFormItem extends Partial<Omit<FormItemProps, 'label' | 'prop'>> {}
 
-export interface InputEl {
-  type: 'input';
-  props?: Partial<Omit<InputProps, 'modelValue'>>;
-}
-
-export interface SelectEl {
-  type: 'select';
-  props?: {
-    multiple?: boolean;
-    disabled?: boolean;
-    valueKey?: string;
-    size?: '' | 'large' | 'default' | 'small';
-    clearable?: boolean;
-    collapseTags?: boolean;
-    collapseTagsTooltip?: boolean;
-    multipleLimit?: boolean;
-    name?: string;
-    effect?: 'dark' | 'light';
-    autocomplete?: string;
-    placeholder?: string;
-    filterable?: boolean;
-  };
-}
-
 export default interface IForm {
   formItem?: IFormItem;
-  el?: InputEl | SelectEl;
+  el?: {
+    type: 'input' | 'select';
+    props: {
+      placeholder?: string;
+      options?: Record<string, any>[];
+      remote?: () => Promise<any>;
+    };
+  };
 }

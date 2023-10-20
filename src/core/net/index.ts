@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const net = axios.create({
-  baseURL: '',
-});
+const net = axios.create({});
 
 export default net;

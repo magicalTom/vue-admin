@@ -12,7 +12,9 @@ export default class User {
     },
     el: {
       type: 'input',
-      props: { placeholder: '请输入用户名' },
+      props: {
+        placeholder: '请输入用户名',
+      },
     },
   })
   @field({
@@ -23,13 +25,10 @@ export default class User {
   /**
    * # 密码
    */
-  @form({
-    el: {
-      type: 'select',
-    },
-  })
+
   @field({
     label: '密码',
+    default: 'xxxx',
   })
   @tableColumn({ sortable: true })
   password!: string;
