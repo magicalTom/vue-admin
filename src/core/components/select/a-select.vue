@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="modelValue">
+  <el-select v-model="modelValue" v-bind="state.props">
     <template #prefix v-if="isHasSlotByKey('prefix')">
       <slot name="prefix" />
     </template>
@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { getFormConfig } from '@/core/decorators/form';
 import ClassConstructor from '@/core/interface/ClassConstructor';
+import { SelectElProps } from '@/core/interface/IForm.ts';
 import { reactive, useSlots } from 'vue';
 
 const modelValue = defineModel('modelValue', { required: true });
@@ -22,7 +23,7 @@ const props = defineProps<{
 }>();
 
 const state = reactive({
-  props: {},
+  props: {} as SelectElProps['props'],
   slotsKeys: Object.keys(slots),
   options: <Record<string, any>[]>[],
 });
@@ -34,11 +35,11 @@ if (import.meta.env.DEV && formConfig?.el?.type && formConfig?.el?.type !== 'sel
   console.warn('配置元素名称与当前使用元素不匹配，应为 select');
 }
 
-state.props = formConfig?.el?.props || {};
-state.options = formConfig?.el?.props?.options || [];
+state.props = (formConfig?.el?.props || {}) as SelectElProps['props'];
+state.options = state.props.options || [];
 if (props.options) state.options = props.options;
-if (formConfig?.el?.props.remote) {
-  formConfig.el.props.remote().then((res) => {
+if (state.props.remote) {
+  state.props.remote().then((res) => {
     // 根据业务需求修改
     state.options = res.data.data;
   });

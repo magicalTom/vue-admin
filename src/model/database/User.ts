@@ -1,6 +1,5 @@
 import field from '@/core/decorators/field';
 import form from '@/core/decorators/form';
-import tableColumn from '@/core/decorators/tableColumn';
 
 export default class User {
   /**
@@ -25,11 +24,59 @@ export default class User {
   /**
    * # 密码
    */
-
   @field({
     label: '密码',
-    default: 'xxxx',
   })
-  @tableColumn({ sortable: true })
+  @form({
+    formItem: {
+      rules: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    },
+    el: {
+      type: 'input',
+      props: {
+        type: 'password',
+        placeholder: '请输入密码',
+      },
+    },
+  })
   password!: string;
+
+  /**
+   * # 性别
+   */
+  @field({ label: '性别' })
+  @form({
+    formItem: {
+      rules: [{ required: true, message: '请选择性别', trigger: 'change' }],
+    },
+    el: {
+      type: 'select',
+      props: {
+        placeholder: '请选择性别',
+        options: [
+          { label: '男', value: 1 },
+          { label: '女', value: 0 },
+          { label: '其他', value: -1 },
+        ],
+      },
+    },
+  })
+  sex!: string;
+
+  /**
+   * # 电话
+   */
+  @field({ label: '电话' })
+  @form({
+    formItem: {
+      rules: [{ required: true, message: '请输入电话', trigger: 'blur' }],
+    },
+    el: {
+      type: 'input',
+      props: {
+        placeholder: '请输入电话',
+      },
+    },
+  })
+  phone!: string;
 }

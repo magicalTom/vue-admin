@@ -120,4 +120,9 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-table {
+  //height: 100%;
+  overflow: hidden;
+}
+</style>

@@ -25,7 +25,10 @@
     "experimentalDecorators": true,
 
     "paths": { "@/*": ["./src/*"] },
-    "types": ["./node_modules/element-plus/global.d.ts"]
+    "types": [
+      "./node_modules/element-plus/global.d.ts",
+      "./node_modules/@element-plus/icons-vue/dist/types/global.d.ts"
+    ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
