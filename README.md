@@ -1,5 +1,30 @@
-# Vue 3 + TypeScript + Vite
+# 一个管理系统框架
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+- Node@20
+- Vue3
+- Typescript
+- Element Plus
+- TailwindCss
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+> 组件化、模块化
+
+## 目录
+
+```
+src/
+├─ assets/
+├─ components-----------------组件库
+│  ├─ AButton-----------------组件
+│  │  ├─ src/
+│  │  │  ├─ AButtonClose.vue
+│  │  │  ├─ index.vue
+│  │  ├─ index.ts-------------统一导出组件
+├─ lib/
+├─ pinia/
+├─ router/
+├─ theme/
+├─ views/
+│  ├─ login
+│  │  ├─ index.ts-------------入口，自动注册路由
+│  │  ├─ index.vue------------页面
+```
