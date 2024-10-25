@@ -9,6 +9,9 @@ const path = computed(() => route.fullPath);
     <el-menu-item index="/editor">
       <template #title>Editor</template>
     </el-menu-item>
+    <el-menu-item index="/user">
+      <template #title>User</template>
+    </el-menu-item>
   </el-menu>
 </template>
 
