@@ -8,17 +8,19 @@ withDefaults(
     showIndex?: boolean;
     showCheckBox?: boolean;
     showOverflowTooltip?: boolean;
+    loading?: boolean;
   }>(),
   {
     showIndex: true,
     showCheckBox: true,
     showOverflowTooltip: true,
+    loading: false,
   },
 );
 </script>
 
 <template>
-  <el-table :data="data" height="100%" :show-overflow-tooltip="showOverflowTooltip">
+  <el-table :data="data" height="100%" v-loading="loading" :show-overflow-tooltip="showOverflowTooltip">
     <TableColumnIndex v-if="showIndex" />
     <TableColumnCheckbox v-if="showCheckBox" />
     <slot />

@@ -21,11 +21,11 @@ const handleSearch = () => {
 
 <template>
   <div class="bg-white px-[18px] pt-[18px]">
-    <el-form ref="formRef" :model="model" inline label-width="100px">
+    <el-form ref="formRef" :model="model" inline label-width="100px" @submit.prevent="handleSearch">
       <slot />
       <el-form-item>
         <AButtonReset @click="handleReset" />
-        <AButtonSearch @click="handleSearch" />
+        <AButtonSearch />
       </el-form-item>
     </el-form>
   </div>

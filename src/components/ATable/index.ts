@@ -10,4 +10,6 @@ export { default as ATableButtonView } from './src/button/TableButtonView.vue';
 
 export { default as ATableToolbar } from './src/TableToolbar.vue';
 
+export { default as useTableData } from './src/hooks/use-tableData';
+
 export default ATable;

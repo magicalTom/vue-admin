@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { AButtonAdd, AButtonDelete, AButtonEdit } from '@/components/AButton';
-import AContainer, { AContent } from '@/components/AContainer';
-import SearchForm from '@/components/AContainer/src/SearchForm.vue';
+import AContainer, { AContent, ASearchForm } from '@/components/AContainer';
 import ADialog, { DialogUtils } from '@/components/ADialog';
 import ATable, {
   ATableButtonDelete,
@@ -11,18 +10,30 @@ import ATable, {
   ATableToolbar,
 } from '@/components/ATable';
 
+const form = reactive({
+  name: '',
+});
+
 const handleClick = () => {
   DialogUtils.create(ADialog, { title: 'xx' });
+};
+
+const handleSearch = () => {
+  console.log(2);
+};
+
+const handleReset = () => {
+  console.log(2);
 };
 </script>
 
 <template>
   <AContainer>
-    <SearchForm>
-      <el-form-item>
-        <el-input placeholder="name" />
+    <ASearchForm :model="form" @search="handleSearch" @reset="handleReset">
+      <el-form-item prop="name">
+        <el-input v-model="form.name" placeholder="name" />
       </el-form-item>
-    </SearchForm>
+    </ASearchForm>
     <AContent>
       <ATableToolbar>
         <AButtonAdd @click="handleClick" />
