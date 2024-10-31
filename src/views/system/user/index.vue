@@ -2,13 +2,8 @@
 import { AButtonAdd, AButtonDelete, AButtonEdit } from '@/components/AButton';
 import AContainer, { AContent, ASearchForm } from '@/components/AContainer';
 import ADialog, { DialogUtils } from '@/components/ADialog';
-import ATable, {
-  ATableButtonDelete,
-  ATableButtonEdit,
-  ATableButtonView,
-  ATableColumnOperate,
-  ATableToolbar,
-} from '@/components/ATable';
+import { ALinkDelete, ALinkEdit, ALinkView } from '@/components/ALink';
+import ATable, { ATableColumnOperate, ATableToolbar } from '@/components/ATable';
 
 const form = reactive({
   name: '',
@@ -25,6 +20,13 @@ const handleSearch = () => {
 const handleReset = () => {
   console.log(2);
 };
+
+const handleDelete = (row: unknown) => {
+  console.log(row);
+  DialogUtils.delete({
+    async onConfirm() {},
+  });
+};
 </script>
 
 <template>
@@ -40,12 +42,14 @@ const handleReset = () => {
         <AButtonEdit />
         <AButtonDelete />
       </ATableToolbar>
-      <ATable :data="[{}]">
+      <ATable :data="[{ id: 1 }]">
         <el-table-column label="序号"></el-table-column>
         <ATableColumnOperate>
-          <ATableButtonView />
-          <ATableButtonEdit />
-          <ATableButtonDelete />
+          <template #default="scope">
+            <ALinkView />
+            <ALinkEdit />
+            <ALinkDelete @click="handleDelete(scope.row)" />
+          </template>
         </ATableColumnOperate>
       </ATable>
     </AContent>

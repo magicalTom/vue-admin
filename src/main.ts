@@ -1,5 +1,6 @@
 import '@/theme/index.scss';
 import '@/theme/tailwind.css';
+import 'element-plus/theme-chalk/el-message-box.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import pinia from './pinia';

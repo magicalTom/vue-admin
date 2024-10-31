@@ -7,13 +7,12 @@ interface Options<T, P, R> {
 }
 
 export default function useTableData<T extends R, P extends Record<string, unknown>, R>(
-  fn: (...args: any) => Promise<PageRootObject<T>>,
+  request: (...args: any) => Promise<PageRootObject<T>>,
   options?: Options<T, P, R>,
 ) {
-  const _options: Required<Options<T, P, R>> = {
+  const _options: Required<Omit<Options<T, P, R>, 'map'>> & Pick<Options<T, P, R>, 'map'> = {
     params: {} as P,
     manual: false,
-    map: (value) => value,
     ...(options || {}),
   };
 
@@ -29,9 +28,14 @@ export default function useTableData<T extends R, P extends Record<string, unkno
   const run = async () => {
     try {
       loading.value = true;
-      const res = await fn(form);
-      list.value = res.data.records.map(_options.map);
+      const res = await request(form);
+      if (!_options.map) {
+        list.value = res.data.records;
+      } else {
+        list.value = res.data.records.map(_options.map);
+      }
       total.value = res.data.total;
+      return list.value;
     } finally {
       loading.value = false;
     }
@@ -43,14 +47,3 @@ export default function useTableData<T extends R, P extends Record<string, unkno
 
   return { form, loading, total, list, run };
 }
-
-// const { list } = useTableData(
-//   () => Promise.resolve({ code: '1', msg: null, data: { records: [{ name: '1' }], total: 1, size: 20, current: 1 } }),
-//   {
-//     map(item) {
-//       return { age: item.name };
-//     },
-//   },
-// );
-
-// list.value[0].age;
