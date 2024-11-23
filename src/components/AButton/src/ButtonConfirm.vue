@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import { CircleCheck } from '@element-plus/icons-vue';
-import AButton from './index.vue';
+import { ButtonProps } from 'element-plus';
 
-defineProps<{
-  submit?: () => Promise<unknown>;
-}>();
+const props = withDefaults(defineProps<Partial<ButtonProps>>(), {
+  icon: CircleCheck,
+  type: 'primary',
+});
+const emits = defineEmits<{ click: [] }>();
 
-const slots = useSlots();
-
-const isHasSlotDefault = computed(() => Object.keys(slots).includes('default'));
+const handleClick = () => {
+  emits('click');
+};
 </script>
 
 <template>
-  <AButton :icon="CircleCheck" :submit="submit" type="primary">
-    <slot v-if="isHasSlotDefault" />
-    <span>确认</span>
-  </AButton>
+  <el-button v-bind="props" @click="handleClick">
+    <slot v-if="$slots.default" />
+    <span v-else>确认</span>
+  </el-button>
 </template>

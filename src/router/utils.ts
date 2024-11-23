@@ -16,5 +16,5 @@ export const buildRoutes = (): Route[] => {
     else children.push(item);
   }
 
-  return [{ path: '/', redirect: 'editor', component: Main, children }, ...roots];
+  return [{ path: '/', redirect: 'user', component: Main, children }, ...roots];
 };

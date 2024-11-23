@@ -1,34 +1,26 @@
 <script setup lang="ts">
-import { AButtonClose, AButtonConfirm } from '@/components/AButton';
+import { DialogProps } from 'element-plus';
 
 withDefaults(
-  defineProps<{
-    title?: string;
-    showClose?: boolean;
-    showConfirm?: boolean;
-  }>(),
-  {
-    showClose: true,
-    showConfirm: true,
-  },
+  defineProps<
+    {
+      title?: string;
+    } & Partial<Omit<DialogProps, 'modelValue' | 'title'>>
+  >(),
+  {},
 );
 
-const visible = ref(true);
+const visible = defineModel({
+  type: Boolean,
+  default: true,
+});
 </script>
 
 <template>
   <el-dialog v-model="visible" :title="title">
     <slot />
     <template #footer>
-      <div class="flex items-center justify-between">
-        <div>
-          <slot name="tip" />
-        </div>
-        <div>
-          <AButtonClose v-if="showClose" v-model:visible="visible" />
-          <AButtonConfirm v-if="showConfirm" />
-        </div>
-      </div>
+      <slot name="footer" />
     </template>
   </el-dialog>
 </template>

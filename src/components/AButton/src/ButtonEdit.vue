@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue';
-import AButton from './index.vue';
+import { ButtonProps } from 'element-plus';
 
+const props = withDefaults(defineProps<Partial<ButtonProps>>(), {
+  icon: Edit,
+});
 const emits = defineEmits<{ click: [] }>();
-const slots = useSlots();
-
-const isHasSlot = computed(() => Object.keys(slots).includes('default'));
 
 const handleClick = () => {
   emits('click');
@@ -13,8 +13,8 @@ const handleClick = () => {
 </script>
 
 <template>
-  <AButton :icon="Edit" type="primary" @click="handleClick">
-    <slot v-if="isHasSlot" />
+  <el-button v-bind="props" @click="handleClick">
+    <slot v-if="$slots.default" />
     <span v-else>修改</span>
-  </AButton>
+  </el-button>
 </template>

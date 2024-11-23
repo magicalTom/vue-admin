@@ -1,57 +1,28 @@
 <script setup lang="ts">
-import { AButtonAdd, AButtonDelete, AButtonEdit } from '@/components/AButton';
-import AContainer, { AContent, ASearchForm } from '@/components/AContainer';
-import ADialog, { DialogUtils } from '@/components/ADialog';
-import { ALinkDelete, ALinkEdit, ALinkView } from '@/components/ALink';
-import ATable, { ATableColumnOperate, ATableToolbar } from '@/components/ATable';
-
-const form = reactive({
-  name: '',
-});
+import { AButtonAdd, AButtonDelete } from '@/components/AButton';
+import AContainer, { AContent } from '@/components/AContainer';
+import { DialogUtils } from '@/components/ADialog';
+import { ATableToolbar } from '@/components/ATable';
+import Auth from '@/components/Auth';
+import Edit from './Edit.vue';
 
 const handleClick = () => {
-  DialogUtils.create(ADialog, { title: 'xx' });
-};
-
-const handleSearch = () => {
-  console.log(2);
-};
-
-const handleReset = () => {
-  console.log(2);
-};
-
-const handleDelete = (row: unknown) => {
-  console.log(row);
-  DialogUtils.delete({
-    async onConfirm() {},
-  });
+  DialogUtils.create(Edit);
 };
 </script>
 
 <template>
-  <AContainer>
-    <ASearchForm :model="form" @search="handleSearch" @reset="handleReset">
-      <el-form-item prop="name">
-        <el-input v-model="form.name" placeholder="name" />
-      </el-form-item>
-    </ASearchForm>
-    <AContent>
-      <ATableToolbar>
-        <AButtonAdd @click="handleClick" />
-        <AButtonEdit />
-        <AButtonDelete />
-      </ATableToolbar>
-      <ATable :data="[{ id: 1 }]">
-        <el-table-column label="序号"></el-table-column>
-        <ATableColumnOperate>
-          <template #default="scope">
-            <ALinkView />
-            <ALinkEdit />
-            <ALinkDelete @click="handleDelete(scope.row)" />
-          </template>
-        </ATableColumnOperate>
-      </ATable>
-    </AContent>
+  <AContainer row>
+    <AContent class="w-[200px]"> ss </AContent>
+    <AContainer>
+      <AContent>
+        <ATableToolbar>
+          <AButtonAdd @click="handleClick" />
+          <Auth auth="*">
+            <AButtonDelete />
+          </Auth>
+        </ATableToolbar>
+      </AContent>
+    </AContainer>
   </AContainer>
 </template>

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue';
+import { LinkProps } from 'element-plus';
 
+const props = withDefaults(defineProps<Partial<LinkProps>>(), {
+  type: 'primary',
+  icon: Edit,
+  underline: false,
+});
 const emits = defineEmits<{ click: [] }>();
-const slots = useSlots();
-
-const isHasSlot = computed(() => Object.keys(slots).includes('default'));
 
 const handleClick = () => {
   emits('click');
@@ -12,8 +15,8 @@ const handleClick = () => {
 </script>
 
 <template>
-  <el-link type="primary" :icon="Edit" :underline="false" @click="handleClick">
-    <slot v-if="isHasSlot" />
+  <el-link v-bind="props" @click="handleClick">
+    <slot v-if="$slots.default" />
     <span v-else>编辑</span>
   </el-link>
 </template>

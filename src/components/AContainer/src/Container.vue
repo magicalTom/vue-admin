@@ -1,7 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    row?: boolean;
+  }>(),
+  {
+    row: false,
+  },
+);
+</script>
 
 <template>
-  <div class="flex flex-col overflow-hidden h-full gap-y-[12px]">
+  <div class="flex overflow-hidden h-full w-full gap-[12px]" :class="[{ 'flex-col': !row }]">
     <slot />
   </div>
 </template>

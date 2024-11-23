@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Delete } from '@element-plus/icons-vue';
-import AButton from './index.vue';
+import { ButtonProps } from 'element-plus';
 
+const props = withDefaults(defineProps<Partial<ButtonProps>>(), {
+  icon: Delete,
+  type: 'danger',
+});
 const emits = defineEmits<{ click: [] }>();
-const slots = useSlots();
-
-const isHasSlot = computed(() => Object.keys(slots).includes('default'));
 
 const handleClick = () => {
   emits('click');
@@ -13,8 +14,8 @@ const handleClick = () => {
 </script>
 
 <template>
-  <AButton :icon="Delete" type="danger" @click="handleClick">
-    <slot v-if="isHasSlot" />
+  <el-button v-bind="props" @click="handleClick">
+    <slot v-if="$slots.default" />
     <span v-else>删除</span>
-  </AButton>
+  </el-button>
 </template>

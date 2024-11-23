@@ -2,7 +2,7 @@ import router from '@/router';
 import { ElMessageBox, type ElMessageBoxOptions } from 'element-plus';
 import { type Component } from 'vue';
 
-interface DeleteOptions extends Omit<ElMessageBoxOptions, 'beforeClose'> {
+interface MessageOptions extends Omit<ElMessageBoxOptions, 'beforeClose'> {
   onConfirm: () => Promise<unknown>;
   onCancel?: () => unknown;
 }
@@ -33,7 +33,7 @@ export default class DialogUtils {
     app.mount(container);
   }
 
-  static delete(options: DeleteOptions) {
+  static delete(options: MessageOptions) {
     const { onConfirm, onCancel, ...reset } = options;
 
     const _options: ElMessageBoxOptions = {
@@ -42,6 +42,35 @@ export default class DialogUtils {
       type: 'warning',
       confirmButtonText: '确定',
       confirmButtonClass: 'el-button--danger',
+      showCancelButton: true,
+      cancelButtonText: '取消',
+      ...reset,
+      async beforeClose(action, instance, done) {
+        if (action === 'confirm') {
+          try {
+            instance.confirmButtonLoading = true;
+            await onConfirm();
+            done();
+          } finally {
+            instance.confirmButtonLoading = false;
+          }
+        } else {
+          instance.confirmButtonLoading = false;
+          onCancel?.();
+          done();
+        }
+      },
+    };
+
+    ElMessageBox(_options);
+  }
+
+  static info(options: MessageOptions) {
+    const { onConfirm, onCancel, ...reset } = options;
+
+    const _options: ElMessageBoxOptions = {
+      title: '提示',
+      confirmButtonText: '确定',
       showCancelButton: true,
       cancelButtonText: '取消',
       ...reset,
