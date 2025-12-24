@@ -5,6 +5,7 @@ import { ButtonProps } from 'element-plus';
 const props = withDefaults(defineProps<Partial<ButtonProps>>(), {
   icon: Delete,
   type: 'danger',
+  plain: true,
 });
 const emits = defineEmits<{ click: [] }>();
 

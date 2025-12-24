@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
@@ -13,9 +13,11 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.7.7",
+    "echarts": "^5.6.0",
     "element-plus": "^2.8.6",
     "lodash": "^4.17.21",
     "pinia": "^2.2.4",
+    "validator": "^13.12.0",
     "vue": "^3.4.37",
     "vue-router": "4"
   },
@@ -23,6 +25,7 @@
     "@eslint/js": "^9.11.1",
     "@types/lodash": "^4.17.12",
     "@types/node": "^22.7.8",
+    "@types/validator": "^13.12.2",
     "@vitejs/plugin-vue": "^5.1.2",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "autoprefixer": "^10.4.20",

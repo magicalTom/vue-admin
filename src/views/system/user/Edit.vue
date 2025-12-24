@@ -2,6 +2,13 @@
 import { AButtonClose, AButtonConfirm } from '@/components/AButton';
 import ADialog, { ADialogTip } from '@/components/ADialog';
 
+defineProps({
+  close: {
+    type: Function,
+    default: () => {},
+  },
+});
+
 const visible = ref(true);
 </script>
 

@@ -9,25 +9,28 @@ interface MessageOptions extends Omit<ElMessageBoxOptions, 'beforeClose'> {
 
 export default class DialogUtils {
   static create<T extends Record<string, unknown>>(node: Component<T>, props?: T, id = 'dialog-id') {
+    // 清理已存在的同名对话框容器
     const oldContainer = document.getElementById(id);
     if (oldContainer) oldContainer.remove();
 
+    // 创建新的对话框容器
     const container = document.createElement('div');
     container.id = id;
     document.body.append(container);
 
+    // 创建包装组件，用于处理路由变化时的清理工作
     const component = defineComponent(() => {
-      return () => {
-        const route = useRoute();
+      const route = useRoute(); // 移到外层以避免每次渲染都创建新的 route 实例
 
-        watch(route, () => {
-          container.remove();
-        });
+      // 监听路由变化，当路由改变时自动移除对话框
+      watch(route, () => {
+        container.remove();
+      });
 
-        return h('div', h(node, props));
-      };
+      return () => h('div', h(node, props));
     });
 
+    // 创建并挂载应用实例
     const app = createApp(component);
     app.use(router);
     app.mount(container);
